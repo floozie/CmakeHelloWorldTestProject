@@ -14,4 +14,4 @@ rm -rf "$BUILD_DIR/CMakeFiles"
 $CMAKE_PATH -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Release -S . -B "$BUILD_DIR" -G "Unix Makefiles"
 
 # Build the project
-$CMAKE_PATH --build "$BUILD_DIR" --config Release --target ALL_BUILD -j 4
+$CMAKE_PATH --build "$BUILD_DIR" --config Release -j 4
