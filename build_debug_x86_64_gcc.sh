@@ -1,17 +1,28 @@
 #!/bin/bash
 # Build and configure CmakeHelloWorldTestProject in Debug mode with GCC (x86_64)
 
+# Set build directory
 BUILD_DIR="$(pwd)/build"
-CMAKE_PATH="cmake"
+DEBUG_DIR="$BUILD_DIR/Debug"
 
-mkdir -p "$BUILD_DIR"
+# Create build and debug directories if they don't exist
+mkdir -p "$DEBUG_DIR"
 
-# Remove CMake cache and CMakeFiles for a clean configure
+# Clean CMake cache for a fresh configuration
 rm -f "$BUILD_DIR/CMakeCache.txt"
 rm -rf "$BUILD_DIR/CMakeFiles"
 
 # Run CMake configure step
-$CMAKE_PATH -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -S . -B "$BUILD_DIR" -G "Unix Makefiles"
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+      -DCMAKE_BUILD_TYPE=Debug \
+      -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="$BUILD_DIR/Debug" \
+      -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG="$BUILD_DIR/Debug" \
+      -S . \
+      -B "$BUILD_DIR" \
+      -G "Unix Makefiles"
 
 # Build the project
-$CMAKE_PATH --build "$BUILD_DIR" --config Debug -j 4
+cmake --build "$BUILD_DIR" -j 4
+
+echo "Executable should be in $BUILD_DIR/Debug"
+
